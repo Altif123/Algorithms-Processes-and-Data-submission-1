@@ -1,0 +1,84 @@
+package searcher;
+import java.util.Arrays;
+
+/**
+ * An implementation of an efficient searcher that finds the kth largest number of a given array
+ * using a small helper array
+ * @author Altif Ali
+ * @version October 2018
+ */
+
+public class CleverSearcher extends Searcher {
+    /**
+     * @param array size of the array required
+     * @param k  index for the array
+     */
+    CleverSearcher(int[] array, int k) {
+        super(array, k);
+    }
+
+    /**
+     * Find the kth largest element in an array of ints using the clever solution
+     * which involves using a small helper array
+     *
+     *
+     * @return kth largest element of array
+     */
+
+    @Override
+    public int findElement() throws IndexingError {
+
+        /*
+         * Find the kth largest element in an array of ints using the clever solution
+         * which involves using a small helper array
+         *
+         * <ul>
+         *     <li> creates a small array from the values index 0 to k from the big array </li>
+         *     <li> sorts the small array </li>
+         *     <ul>
+         *         <li> uses a for loop to loop through the big array  </li>
+         *         <li> if the smallest value of the small array is less than the current index of the big array
+         *              then replace the smallest value in the small array with the larger value from the big array </li>
+         *         <ul>
+         *                 <li> initializes counter variable ready to be used by the while loop </li>
+         *                 <li> while the counter is less than k -1 and if the current index of the small array is greater than the
+         *                 next value in the loop index +1 <li/>
+         *                 <li> creates a place holder variable which stores the current value in the small array </li>
+         *                 <li> adds 1 to the counter index of the small array </li>
+         *                 <li> assigns the new counter index value to the holder </li>
+         *                 <li> increments counter </li>
+         *         <ul/>
+         *
+         *     </ul>
+         *     <li> whilst this occurs the small array is sorted and returned </li>
+         * </ul>
+         *
+         * @return kth largest element of array
+         */
+
+        int[] bigArray = getArray();
+        int k = getIndex();
+        if (k <= 0 || k > bigArray.length) {
+            throw new IndexingError();
+        }
+        int[] smallArray = Arrays.copyOfRange(bigArray, 0, k);
+        Arrays.sort(smallArray);
+
+        for (int index = k; index < bigArray.length; index++) {
+
+            if (smallArray[0] < bigArray[index]) {
+                smallArray[0] = bigArray[index];
+
+                int counter = 0;
+                while ((counter < k - 1) && (smallArray[counter] > smallArray[counter + 1])) {
+                    int holder = smallArray[counter];//holder stores the position of the value in the small array
+                    smallArray[counter] = smallArray[counter + 1];
+                    smallArray[counter + 1] = holder; //stores the position of the current value in the small array
+                    counter += 1;
+                }
+            }
+
+        }
+        return smallArray[0];
+    }
+}
