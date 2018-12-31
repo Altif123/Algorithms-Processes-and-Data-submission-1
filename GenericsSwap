@@ -1,0 +1,37 @@
+package genericMethods;
+
+/** An implementation of a method that swaps two indices within an array
+ * @author Altif Ali
+ * @version november 2018
+ */
+class Swap {
+
+    /**
+     * @param indexA position of the first element to be swapped
+     * @param indexB position of the second element to be swapped
+     * @param array the array that contains the elements, Array type is T this allows it to be generic
+     * @throws IndexingError throws for index out of bounds errors
+     */
+    public static <T> void swapPosition (T[] array, int indexA, int indexB) throws IndexingError {
+        /*
+         * Swaps the position of two elements within an array
+         *
+         * <ul>
+         *     <li> checks if the indices are less than the length of the array and are more than 0</li>
+         *     <li> creates holder variable as type T to store the value at indexB </li>
+         *     <li> Value at position indexB set as value at indexA</li>
+         *     <li>value of indexB stored in the holder is set to indexA  </li>
+         * </ul>
+         *
+         */
+
+       if (indexA > array.length||indexB > array.length||indexA < 0||indexB < 0){
+           throw new IndexingError();
+       }
+        T holder = array[indexB]; //stores the value at indexB
+        array[indexB] = array[indexA];
+        array[indexA] = holder;
+
+    }
+
+}
